@@ -6,6 +6,7 @@
 # In[1]:
 
 
+# ------------------------------------------------------------------------------------------------
 # Part one: Multiply the two entries that sum to 2020
 # Part two: What is the product of the three entries that sum to 2020
 
@@ -26,6 +27,7 @@ for a in l:
 # In[22]:
 
 
+# ------------------------------------------------------------------------------------------------
 # part one: How many passwords are valid according to policies?
 # part two: Check if the assigned characters are in the right position
 # in the password. Same file, same data, other rules
@@ -64,6 +66,7 @@ print("Part two: All cases: {} Good cases: {}".format(c2, result))
 # In[4]:
 
 
+# ------------------------------------------------------------------------------------------------
 # Part one
 
 count=0
@@ -109,6 +112,7 @@ print("Number of trees on listed slopes: ", total)
 # In[5]:
 
 
+# ------------------------------------------------------------------------------------------------
 # Part one: check correctness passports
 
 with open('aocday4.txt') as f:
@@ -151,6 +155,7 @@ print("Passports with correct formats: {}".format(tot))
 # In[7]:
 
 
+# ------------------------------------------------------------------------------------------------
 # Part 1: find the highest seat number
 
 with open('aocday5.txt') as f:
@@ -206,6 +211,7 @@ for i in range(1, len(seats)-1):
 # In[8]:
 
 
+# ------------------------------------------------------------------------------------------------
 # Part one: check correctness passports
 # First attemps, re-write sometime
 
@@ -257,6 +263,7 @@ print("Sum all yes's", res)
 # In[23]:
 
 
+# ------------------------------------------------------------------------------------------------
 # Part one:
 # This is a tricky one. I think either a tree or graph problem. (....) It's a graph problem. Zero experience
 # with this so I will try to build a 'graph' with a dict with a list that holds the bags containing other bags
@@ -342,6 +349,7 @@ print("Part two: total inside bags of {}\t".format(target_name), cnt_inside_bags
 # In[13]:
 
 
+# ------------------------------------------------------------------------------------------------
 # part one: fix the infinite loop, determine the accumulator value
 
 f = open("aocday8.txt").readlines()
@@ -402,6 +410,7 @@ print("Fixed accumalator value:", value)
 # In[24]:
 
 
+# ------------------------------------------------------------------------------------------------
 # day nine: decypher the eXchange-Masking Addition System (XMAS) encryption of the console
 
 # Part one: find the first number in the list (after the preamble) which is not the sum of two of the 25 numbers before it
@@ -462,6 +471,7 @@ print("Contiguous min {}, max {}, sum {}". format(min(work_set), max(work_set), 
 # In[16]:
 
 
+# ------------------------------------------------------------------------------------------------
 # day ten: What is the number of 1-jolt differences multiplied by the number of 3-jolt differences?
 # with open("puzzle_input.txt","r") as f:
 # 	puzzle_input = [[y for y in line.strip()] for line in f]
@@ -508,6 +518,7 @@ print("Product of all adaptor combinations: ", combinations[-1])
 # In[25]:
 
 
+# ------------------------------------------------------------------------------------------------
 with open("aocday11.txt","r") as f:
     lines = [item.strip() for item in f]
     
@@ -520,9 +531,10 @@ print(' Do this one later')
 # In[27]:
 
 
-# Day one: What is the Manhattan distance between that location and the ship's starting position?
-# The Manhattan distance between two vectors (city blocks) is equal to the one-norm of the distance between the vectors
-# 319
+# --------------------------------------------------------------------------------
+# # Day one: Calculate Manhattan distance between starting and end position
+# The Man.dist between two vectors is = to the one-norm of the distance between the vectors
+
 # Action N means to move north by the given value.
 # Action S means to move south by the given value.
 # Action E means to move east by the given value.
