@@ -130,13 +130,7 @@ for x in grid:
 print("Trees encountered: {}".format(c))
 
 
-# In[ ]:
-
-
 # Part two
-
-with open('aocday3.txt') as input:
-	grid = [line.rstrip() for line in input]
 
 lst = [(1,1), (3,1), (5, 1), (7, 1), (1, 2)]
 l = len(grid)
@@ -164,14 +158,10 @@ print("Number of trees on listed slopes: ", total)
 # In[ ]:
 
 
+# Part one: check correctness passports
+
 with open('aocday4.txt') as f:
     data = f.read().split('\n\n')
-
-
-# In[ ]:
-
-
-# Part one: check correctness passports
 
 fields = ['ecl', 'pid', 'eyr', 'hcl', 'byr', 'iyr', 'hgt']
 tot = 0
@@ -188,7 +178,7 @@ print("Correct passports: {}".format(tot))
 # In[ ]:
 
 
-# Part one: check correctness of passports format
+# Part two: check correctness of passports format
 import re
 tot = 0
 
@@ -213,17 +203,10 @@ print("Passports with correct formats: {}".format(tot))
 # # Day 5 of AOC 2020
 # --- Day 5: Binary Boarding ---
 
-# In[ ]:
-
+# Part 1: find the highest seat number
 
 with open('aocday5.txt') as f:
     lines = f.read().split('\n')
-
-
-# In[ ]:
-
-
-# Part 1: find the highest seat number
 
 max_id = 0
 seats = []
@@ -273,18 +256,12 @@ for i in range(1, len(seats)-1):
 # # Day 6 of AOC 2020
 # --- Day 6: Custom Customs ---
 
-# In[ ]:
-
-
-with open('aocday6.txt') as f:
-    questions = f.read().split('\n')
-
-
-# In[ ]:
-
 
 # Part one: check correctness passports
 # First attemps, re-write sometime
+
+with open('aocday6.txt') as f:
+    questions = f.read().split('\n')
 
 tot = 0
 prod = 0
@@ -305,9 +282,6 @@ for q in questions:
         qq = ''
 
 print("Total counts: {}".format(tot))
-
-
-# In[ ]:
 
 
 # Part two: for each group count nr of questions that EVERYONE answered yes and sum them
@@ -335,12 +309,9 @@ print("Sum all yes's", res)
 
 # In[ ]:
 
-
+# Part one:
 # This is a tricky one. I think either a tree or graph problem. (....) It's a graph problem. Zero experience
 # with this so I will try to build a 'graph' with a dict with a list that holds the bags containing other bags
-
-
-# In[ ]:
 
 
 bags = dict()
@@ -375,8 +346,7 @@ print(sum(map(part_1, bags)))
 print(part_2(target) - 1)
 
 
-# In[ ]:
-
+# Part two
 
 def has_target_bag(target_name, inside_bags):
     for child in inside_bags:
@@ -426,7 +396,6 @@ print("Part two: total inside bags of {}\t".format(target_name), cnt_inside_bags
 # --- Day 8: Handheld Halting ---
 
 # In[5]:
-
 
 # part one: fix the infinite loop, determine the accumulator value
 
@@ -677,8 +646,6 @@ for instr in lines:
 print('N', dist['N'], 'S', dist['S'], 'E', dist['E'], 'W', dist['W'])
 print("Manhattan distance = ", abs(dist['N'] - dist['S']) + abs(dist['E'] - dist['W']))
 
-
-# In[ ]:
 
 
 
