@@ -379,8 +379,8 @@ with open('aocday7.txt', 'r') as file:
         data[key] = {}
         for i, word in enumerate(words):
             if words[i].isnumeric():
-                subKey = words[i + 1] + ' ' + words[i + 2]
-                data[key][subKey] = int(word)
+                sub_key = words[i + 1] + ' ' + words[i + 2]
+                data[key][sub_key] = int(word)
 
 answer = []
 target_name = 'shiny gold' # now we can try out all bags ;)
