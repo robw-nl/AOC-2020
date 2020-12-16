@@ -1,10 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Day one of Advent of Code 2020
-# --- Day 1: Report Repair ---
+# # --- Day 1: Report Repair ---
 
-# In[13]:
+# In[1]:
 
 
 # Part one: Multiply the two entries that sum to 2020
@@ -22,93 +21,47 @@ for a in l:
             if p2 == 0 and a+b+c==2020: p2=a*b*c; print("Part two: P of {}*{}*{} = {}".format(a, b, c, p2))
 
 
-# # Day 2 of AOC 2020
-# --- Day 2: Password Philosophy ---
+# # --- Day 2: Password Philosophy ---
 
-# In[ ]:
+# In[22]:
 
 
 # part one: How many passwords are valid according to policies?
+# part two: Check if the assigned characters are in the right position
+# in the password. Same file, same data, other rules
+
 
 col1_2 = []
-counter = 0
+c1 = c2 = 0
+result = 0
 
 for lines in open('aocday2.txt').read().splitlines():
     lines = lines.split(' ')
-    if i < 10: print(cols)
  
     col1_2 = lines[0].rsplit('-', 1)
     count = lines[2].count(lines[1][0])
 
     if int(count) >= int(col1_2[0]) and int(count) <= int(col1_2[1]):
-        counter+=1
-        
-print("Part one: Occurences: {}".format(counter))
+        c1+=1
 
-
-# In[ ]:
-
-
-# part two
-# check if the assigned characters are in the right position in the password
-# same file, same data, other rules
-
-import csv
-
-with open("aocday2.txt", "r") as csv_file:
-    # example: 1 7 c jcnbqbcwcc
-    # if char on pos x AND pos y then FALSE
-    # if char on pos x OR pos y then TRUE
-    # if char on neither then FALSE
-
-    # col1_2[0] = pos 1
-    # col1_2[0] = pos 2
-    # lines[1] = character
-    # lines[2] = string
-
-    i=0
-    col1_2 = []
-    result = 0
-    csv_reader = csv.reader(csv_file, delimiter=' ')
-
-    for lines in csv_reader:
-
-        col1_2 = lines[0].rsplit('-', 1)
-        count = lines[2].count(lines[1][0])
-
-        if len(lines[2]) > int(col1_2[0]):
-            if lines[1][0] == lines[2][int(col1_2[0])-1] and lines[1][0] == lines[2][int(col1_2[1])-1]:
-                result=result
-            elif lines[1][0] == lines[2][int(col1_2[0])-1] or lines[1][0] == lines[2][int(col1_2[1])-1]:
-                result+=1
-            else:
-                 result=result
-        else:
+    if len(lines[2]) > int(col1_2[0]):
+        if lines[1][0] == lines[2][int(col1_2[0])-1] and lines[1][0] == lines[2][int(col1_2[1])-1]:
             result=result
-        i=i+1
-
-print("Part two: All cases: {} Good cases: {}".format(i, result))    
-
-
-# # Day 3 of AOC 2020
-# --- Day 2: Password Philosophy ---
-
-# In[ ]:
-
-
-# Traverse a maze of trees
-# data example:
-#  -   ...............#.#.............
-#  -   ##..#....................#...##
-#  -   ......#..#.#.....#..#.#.##.....
-#  -   .........#...#..............#.#
-#  -   ............#.......##.........
-#  -   ...#.....#.....#...#.....#..#..
-#
-# 232 lines, 31 chars/line
+        elif lines[1][0] == lines[2][int(col1_2[0])-1] or lines[1][0] == lines[2][int(col1_2[1])-1]:
+            result+=1
+        else:
+             result=result
+    else:
+        result=result
+    c2+=1
+    
+print("Part one: Occurences: {}".format(c1))
+print("Part two: All cases: {} Good cases: {}".format(c2, result))    
 
 
-# In[ ]:
+# # --- Day 3: Password Philosophy ---
+
+# In[4]:
 
 
 # Part one
@@ -128,7 +81,6 @@ for x in grid:
     i += 3
 
 print("Trees encountered: {}".format(c))
-
 
 # Part two
 
@@ -152,17 +104,16 @@ for steps in lst:
 print("Number of trees on listed slopes: ", total)
 
 
-# # Day 4 of AOC 2020
-# --- Day 4: Passport Processing ---
+# # --- Day 4: Passport Processing ---
 
-# In[ ]:
+# In[5]:
 
 
 # Part one: check correctness passports
 
 with open('aocday4.txt') as f:
     data = f.read().split('\n\n')
-
+    
 fields = ['ecl', 'pid', 'eyr', 'hcl', 'byr', 'iyr', 'hgt']
 tot = 0
 
@@ -172,11 +123,6 @@ for p in data:
         tot += 1
 
 print("Correct passports: {}".format(tot))
-        
-
-
-# In[ ]:
-
 
 # Part two: check correctness of passports format
 import re
@@ -200,8 +146,10 @@ for p in data:
 print("Passports with correct formats: {}".format(tot))
 
 
-# # Day 5 of AOC 2020
-# --- Day 5: Binary Boarding ---
+# # --- Day 5: Binary Boarding ---
+
+# In[7]:
+
 
 # Part 1: find the highest seat number
 
@@ -253,8 +201,9 @@ for i in range(1, len(seats)-1):
         print("My seat nr: {}".format(sorted_seats[i]+1))
 
 
-# # Day 6 of AOC 2020
-# --- Day 6: Custom Customs ---
+# # --- Day 6: Custom Customs ---
+
+# In[8]:
 
 
 # Part one: check correctness passports
@@ -262,7 +211,7 @@ for i in range(1, len(seats)-1):
 
 with open('aocday6.txt') as f:
     questions = f.read().split('\n')
-
+    
 tot = 0
 prod = 0
 qq=''
@@ -282,7 +231,6 @@ for q in questions:
         qq = ''
 
 print("Total counts: {}".format(tot))
-
 
 # Part two: for each group count nr of questions that EVERYONE answered yes and sum them
 # Took a different approach here
@@ -304,18 +252,17 @@ for group in text:
 print("Sum all yes's", res)
 
 
-# # Day 7 of AOC 2020
-# --- Day 7: Handy Haversacks ---
+# # --- Day 7: Handy Haversacks ---
 
-# In[ ]:
+# In[23]:
+
 
 # Part one:
 # This is a tricky one. I think either a tree or graph problem. (....) It's a graph problem. Zero experience
 # with this so I will try to build a 'graph' with a dict with a list that holds the bags containing other bags
 
-
 bags = dict()
-p=1 # print switch
+p=0 # print switch
 
 for line in open('aocday7.txt').read().splitlines():
     left_bag, right_bags = line.split(' contain ')
@@ -345,9 +292,7 @@ target = 'shiny', 'gold'
 print(sum(map(part_1, bags)))
 print(part_2(target) - 1)
 
-
-# Part two
-
+# Part two:
 def has_target_bag(target_name, inside_bags):
     for child in inside_bags:
         if child == target_name:
@@ -392,10 +337,10 @@ print("Part one: sum parents of {}\t\t".format(target_name), len(answer))
 print("Part two: total inside bags of {}\t".format(target_name), cnt_inside_bags(data[target_name]))
 
 
-# # Day 8 of AOC 2020
-# --- Day 8: Handheld Halting ---
+# # --- Day 8: Handheld Halting ---
 
-# In[5]:
+# In[13]:
+
 
 # part one: fix the infinite loop, determine the accumulator value
 
@@ -452,39 +397,35 @@ for index, line in enumerate(f):
 print("Fixed accumalator value:", value)
 
 
-# # Day 9 of AOC 2020
-# --- Day 9: Encoding Error ---
+# # --- Day 9: Encoding Error ---
 
-# In[ ]:
+# In[24]:
 
 
 # day nine: decypher the eXchange-Masking Addition System (XMAS) encryption of the console
 
-file = open('aocday9.txt', 'r')
-lines = file.readlines()
-#print(lines)
-lines = [int(item.strip()) for item in lines] # remove all '\n' and conv to int
-
-
-# In[ ]:
-
-
 # Part one: find the first number in the list (after the preamble) which is not the sum of two of the 25 numbers before it
 # Solution: slide with 25 numbers through the whole list (lines) and calculate the sum of all components to 25+1 until one fails
 
+file = open('aocday9.txt', 'r')
+lines = file.readlines()
+
+#print(lines)
+lines = [int(item.strip()) for item in lines] # remove all '\n' and conv to int
+
 p = range(1, 150); c=0 # print switch    
 next = 25 # next nr to work with
-try_num = 0
+shot = 0
 
 while next < len(lines):
-    try_num = lines[next]
+    shot = lines[next]
     try_set = lines[next-25:next]
     found_match = False
     if c in p: print(try_set, '\n'); c+=1
     for num in try_set:
-        if try_num > num:
-            try_match = try_num - num
-            if c in p: print(try_num, num, try_match, '\n');
+        if shot > num:
+            try_match = shot - num
+            if c in p: print(shot, num, try_match, '\n');
             if try_match in try_set:
                 found_match = True
                 continue
@@ -492,10 +433,6 @@ while next < len(lines):
         print("Sum outlier: %d" % lines[next])
         break
     next += 1
-
-
-# In[ ]:
-
 
 # Part two: find a contiguous set of at least two numbers in 'lines' which sum to part 1 outcome
 # encryption weakness, add together the smallest and largest number in this contiguous range
@@ -520,10 +457,9 @@ for i, start_number in enumerate(lines):
 print("Contiguous min {}, max {}, sum {}". format(min(work_set), max(work_set), max(work_set) + min(work_set)))
 
 
-# # Day 10 of AOC 2020
-# --- Day 10: Adapter Array ---
+# # --- Day 10: Adapter Array ---
 
-# In[ ]:
+# In[16]:
 
 
 # day ten: What is the number of 1-jolt differences multiplied by the number of 3-jolt differences?
@@ -549,9 +485,6 @@ res = [lines[n] - lines[n - 1] for n in range(1, len(lines))]
 print('Method two - product of 1 and 3 counts:', res.count(1) * res .count(3))
 
 
-# In[ ]:
-
-
 # day two: What is the number of distinct ways you can arrange the adapters to connect the charging outlet to your device?
 # 
 p = range(1, 50); c=0 # print switch   
@@ -570,28 +503,21 @@ for i in range(1, len(lines)):
 print("Product of all adaptor combinations: ", combinations[-1])
 
 
-# # Day 11 of AOC 2020
-# --- Day 11: Seating System ---
+# # --- Day 11: Seating System ---
 
-# In[ ]:
+# In[25]:
 
 
 with open("aocday11.txt","r") as f:
     lines = [item.strip() for item in f]
     
-for i in range(20): print(lines[i])
+# for i in range(20): print(lines[i])
+print(' Do this one later')
 
 
-# In[ ]:
+# # --- Day 12: Rain Risk ---
 
-
-# do later
-
-
-# # Day 12 of AOC 2020
-# --- Day 12: Rain Risk ---
-
-# In[ ]:
+# In[27]:
 
 
 # Day one: What is the Manhattan distance between that location and the ship's starting position?
@@ -605,21 +531,17 @@ for i in range(20): print(lines[i])
 # Action R means to turn right the given number of degrees.
 # Action F means to move forward by the given value in the direction the ship is currently facing.
 
-
-# In[ ]:
-
-
 lines = [[f.strip()[0], int(f.strip()[1:])] for f in open('aocday12.txt', 'r')]
 
-for i in range(10): print(lines[i])
-print('\n')
+# for i in range(10): print(lines[i])
+# print('\n')
 
 dist = {'E':0, 'S':0, 'W': 0, 'N':0}
 dirs = 'ESWN'
 curr_dir = dirs[0]
 
-p = range(1, 50); c=1 # print switch 
-q = range(1, 50); c=1 # print switch 
+p = range(1, 50); c=0 # print switch 
+q = range(1, 50); c=0 # print switch 
 
 def change_dir(turn: str, angle: int):
     if turn == 'L':
@@ -645,8 +567,3 @@ for instr in lines:
 # calculate manhattan distance between 2 vectors with abs()
 print('N', dist['N'], 'S', dist['S'], 'E', dist['E'], 'W', dist['W'])
 print("Manhattan distance = ", abs(dist['N'] - dist['S']) + abs(dist['E'] - dist['W']))
-
-
-
-
-
