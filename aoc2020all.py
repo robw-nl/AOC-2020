@@ -473,8 +473,6 @@ print("Contiguous min {}, max {}, sum {}". format(min(work_set), max(work_set), 
 
 # ------------------------------------------------------------------------------------------------
 # day ten: What is the number of 1-jolt differences multiplied by the number of 3-jolt differences?
-# with open("puzzle_input.txt","r") as f:
-# 	puzzle_input = [[y for y in line.strip()] for line in f]
 
 with open("aocday10.txt","r") as f:
     lines = [int(item.strip()) for item in f]
@@ -496,7 +494,7 @@ print('Method two - product of 1 and 3 counts:', res.count(1) * res .count(3))
 
 
 # day two: What is the number of distinct ways you can arrange the adapters to connect the charging outlet to your device?
-# 
+
 p = range(1, 50); c=0 # print switch   
 combinations = [1] * len(lines)
 
