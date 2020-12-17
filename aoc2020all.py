@@ -3,10 +3,10 @@
 
 # # --- Day 1: Report Repair ---
 
-# In[1]:
+# In[ ]:
 
 
-# ------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------
 # Part one: Multiply the two entries that sum to 2020
 # Part two: What is the product of the three entries that sum to 2020
 
@@ -24,10 +24,10 @@ for a in l:
 
 # # --- Day 2: Password Philosophy ---
 
-# In[22]:
+# In[ ]:
 
 
-# ------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------
 # part one: How many passwords are valid according to policies?
 # part two: Check if the assigned characters are in the right position
 # in the password. Same file, same data, other rules
@@ -61,12 +61,12 @@ print("Part one: Occurences: {}".format(c1))
 print("Part two: All cases: {} Good cases: {}".format(c2, result))    
 
 
-# # --- Day 3: Password Philosophy ---
+# # --- Day 3: Toboggan Trajectory ---
 
-# In[4]:
+# In[ ]:
 
 
-# ------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------
 # Part one
 
 count=0
@@ -109,10 +109,10 @@ print("Number of trees on listed slopes: ", total)
 
 # # --- Day 4: Passport Processing ---
 
-# In[5]:
+# In[ ]:
 
 
-# ------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------
 # Part one: check correctness passports
 
 with open('aocday4.txt') as f:
@@ -152,10 +152,10 @@ print("Passports with correct formats: {}".format(tot))
 
 # # --- Day 5: Binary Boarding ---
 
-# In[7]:
+# In[ ]:
 
 
-# ------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------
 # Part 1: find the highest seat number
 
 with open('aocday5.txt') as f:
@@ -168,10 +168,10 @@ prt = 0
 
 for line in lines:
     row_low = 0
-    row_high = 127 # nr of rows (+1)
+    row_high = 127 # nr of rows +1
 
     col_low = 0
-    col_high = 7 # nr of seats (+1)
+    col_high = 7 # nr of seats +1
     
     for letter in line:
         if letter == "F":
@@ -208,10 +208,10 @@ for i in range(1, len(seats)-1):
 
 # # --- Day 6: Custom Customs ---
 
-# In[8]:
+# In[ ]:
 
 
-# ------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------
 # Part one: check correctness passports
 # First attemps, re-write sometime
 
@@ -260,7 +260,7 @@ print("Sum all yes's", res)
 
 # # --- Day 7: Handy Haversacks ---
 
-# In[23]:
+# In[7]:
 
 
 # --------------------------------------------------------------------------------
@@ -269,7 +269,7 @@ print("Sum all yes's", res)
 # with this so I will to build a 'graph' with a tuple, dict with a list that holds the bags containing other bags
 
 bags = dict()
-p=1 # print switch
+p=0 # print switch
 
 for line in open('aocday7.txt').read().splitlines():
     left_bag, right_bags = line.split(' contain ')
@@ -303,10 +303,10 @@ print("Part two: total inside bags of \t", part_2(target) - 1)
 
 # # --- Day 8: Handheld Halting ---
 
-# In[13]:
+# In[ ]:
 
 
-# ------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------
 # part one: fix the infinite loop, determine the accumulator value
 
 f = open("aocday8.txt").readlines()
@@ -364,10 +364,10 @@ print("Fixed accumalator value:", value)
 
 # # --- Day 9: Encoding Error ---
 
-# In[24]:
+# In[ ]:
 
 
-# ------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------
 # day nine: decypher the eXchange-Masking Addition System (XMAS) encryption of the console
 
 # Part one: find the first number in the list (after the preamble) which is not the sum of two of the 25 numbers before it
@@ -425,10 +425,10 @@ print("Contiguous min {}, max {}, sum {}". format(min(work_set), max(work_set), 
 
 # # --- Day 10: Adapter Array ---
 
-# In[16]:
+# In[ ]:
 
 
-# ------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------
 # day ten: What is the number of 1-jolt differences multiplied by the number of 3-jolt differences?
 
 with open("aocday10.txt","r") as f:
@@ -451,7 +451,7 @@ print('Method two - product of 1 and 3 counts:', res.count(1) * res .count(3))
 
 
 # day two: What is the number of distinct ways you can arrange the adapters to connect the charging outlet to your device?
-
+ 
 p = range(1, 50); c=0 # print switch   
 combinations = [1] * len(lines)
 
@@ -470,25 +470,50 @@ print("Product of all adaptor combinations: ", combinations[-1])
 
 # # --- Day 11: Seating System ---
 
-# In[25]:
+# In[ ]:
 
 
-# ------------------------------------------------------------------------------------------------
 with open("aocday11.txt","r") as f:
     lines = [item.strip() for item in f]
     
-# for i in range(20): print(lines[i])
-print(' Do this one later')
+for i in range(20): print(lines[i])
+
+
+# In[ ]:
+
+
+def seating_system(seats, rule, model):
+    grid = seats
+    while True:
+        new = []
+        for r in range(len(grid)):
+            new_line = []
+            for c in range(len(grid[r])):
+                seat = grid[r][c]
+                near = [i for i in model(r, c, grid)]
+                if seat == EMP and near.count(OCC) == 0:
+                    new_line.append(OCC)
+                elif seat == OCC and near.count(OCC) >= rule:
+                    new_line.append(EMP)
+                else:
+                    new_line.append(seat)
+            new.append(new_line)
+        if grid == new:
+            return sum(i.count(OCC) for i in new)
+        grid = new
+
+seats = open('../inputs/11').read().splitlines()
+part_1 = seating_system(seats, 4, adjacent)
 
 
 # # --- Day 12: Rain Risk ---
 
-# In[27]:
+# In[ ]:
 
 
 # --------------------------------------------------------------------------------
 # # Day one: Calculate Manhattan distance between starting and end position
-# The Man.dist between two vectors is = to the one-norm of the distance between the vectors
+# The Manhattan distance between two vectors is equal to the one-norm of the distance between the vectors
 
 # Action N means to move north by the given value.
 # Action S means to move south by the given value.
@@ -513,7 +538,7 @@ q = range(1, 50); c=0 # print switch
 def change_dir(turn: str, angle: int):
     if turn == 'L':
         if c in p: print('change_dir: L: ', angle, -angle//90)
-        return -angle//90 # - reverse direction; use the remainder as value to move (1)
+        return -angle//90 # - reverse direction; use the remainder as value to move (1 to...)
     if turn == 'R':
         if c in p: print('change_dir: R: ', angle, angle//90)
         return angle//90
@@ -534,3 +559,4 @@ for instr in lines:
 # calculate manhattan distance between 2 vectors with abs()
 print('N', dist['N'], 'S', dist['S'], 'E', dist['E'], 'W', dist['W'])
 print("Manhattan distance = ", abs(dist['N'] - dist['S']) + abs(dist['E'] - dist['W']))
+
