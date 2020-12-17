@@ -263,10 +263,10 @@ print("Sum all yes's", res)
 # In[23]:
 
 
-# ------------------------------------------------------------------------------------------------
+# --------------------------------------------------------------------------------
 # Part one:
 # This is a tricky one. I think either a tree or graph problem. (....) It's a graph problem. Zero experience
-# with this so I will try to build a 'graph' with a dict with a list that holds the bags containing other bags
+# with this so I will to build a 'graph' with a dict with a list that holds the bags containing other bags
 
 bags = dict()
 p=0 # print switch
@@ -296,52 +296,8 @@ def part_2(bag_color: tuple) -> int:
 
 
 target = 'shiny', 'gold'
-print(sum(map(part_1, bags)))
-print(part_2(target) - 1)
-
-# Part two:
-def has_target_bag(target_name, inside_bags):
-    for child in inside_bags:
-        if child == target_name:
-            return True
-        try:
-            if has_target_bag(target_name, data[child]):
-                return True
-        except:
-            return False
-    return False
-
-def cnt_inside_bags(inside_bags):
-    if inside_bags == {}:
-        return 0
-    total = 0
-    for inside_bag_name in inside_bags:
-        try:
-            total += ((cnt_inside_bags(data[inside_bag_name]) + 1) * inside_bags[inside_bag_name])
-        except:
-            return 0
-    return total
-
-data = {} # all data (value sets) are stored here
-
-with open('aocday7.txt', 'r') as file:
-    for line in file.readlines():
-        words = line.split()
-        key = words[0] + ' ' + words[1]
-        data[key] = {}
-        for i, word in enumerate(words):
-            if words[i].isnumeric():
-                sub_key = words[i + 1] + ' ' + words[i + 2]
-                data[key][sub_key] = int(word)
-
-answer = []
-target_name = 'shiny gold' # now we can try out all bags ;)
-for bag in data:
-    if has_target_bag(target_name, data[bag]):
-        answer.append(bag)
-
-print("Part one: sum parents of {}\t\t".format(target_name), len(answer))
-print("Part two: total inside bags of {}\t".format(target_name), cnt_inside_bags(data[target_name]))
+print("Part one: sum parents of\t", sum(map(part_1, bags)))
+print("Part two: total inside bags of \t", part_2(target) - 1)
 
 
 # # --- Day 8: Handheld Halting ---
