@@ -1,15 +1,15 @@
 # Day 11: Seating System. Simulate your seating area by applying the seating
 # rules repeatedly until no seats change state. How many seats end up occupied?
 
-with open('/home/rob/Notebooks/AOC2020/day11.txt') as fh:
-    empty_chart_text = fh.read()
+with open('/home/rob/Notebooks/AOC2020/day11.txt') as f:
+    empty_chart_text = f.read()
     
 def text2chart(txt):
-    D = {}
+    chart = {}
     for i, row in enumerate(txt.split()):
         for  j, val in enumerate(row):
-            D[complex(i, j)] = val
-    return D
+            chart[complex(i, j)] = val
+    return chart
 
 def run_till_stabilized(part, chart):
     if part == 1:
