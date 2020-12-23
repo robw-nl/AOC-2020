@@ -1,85 +1,116 @@
 # Day 11: Seating System. Simulate your seating area by applying the seating
 # rules repeatedly until no seats change state. How many seats end up occupied?
 
-with open('/home/rob/Notebooks/AOC2020/day11.txt') as f:
-    empty_chart_text = f.read()
-    
-def text2chart(txt):
-    chart = {}
-    for i, row in enumerate(txt.split()):
-        for  j, val in enumerate(row):
-            chart[complex(i, j)] = val
-    return chart
+def part1():
+    with open("day11.txt", "r") as file:
+        data = file.read()
+    data = data.split("\n")
 
-def run_till_stabilized(part, chart):
-    if part == 1:
-        nc = nextchart(chart)
-        while nc != chart:
-            chart, nc = nc, nextchart(nc)
-    else:
-        nc = nextchart2(chart)
-        while nc != chart:
-            chart, nc = nc, nextchart2(nc)
-    return nc
+    old_layout = {}
+    for i, row in enumerate(data):
+        for j, seat in enumerate(row):
+            old_layout[i, j] = seat
 
-# Part 1
+    layout = {}
+    while True:
+        for (row, col), seat in old_layout.items():
+            if seat == "#":
+                neighbors = ""
+                for i in range(-1, 2):
+                    for j in range(-1, 2):
+                        if i == j == 0:
+                            continue
+                        neighbors += old_layout.get((row - i, col - j), ".")
+                occupied = neighbors.count("#")
 
-def changeseat(chart, seatkey):
-    seat = chart[seatkey]
-    if seat == '.':
-        return seat
-    occupied = sum(
-        chart.get(seatkey + drxn) == '#'
-        for drxn in [-1, -1 + 1j, 1j, 1 + 1j, 1, 1 - 1j, -1j, -1 - 1j]
-    )
+                if occupied >= 4:
+                    layout[row, col] = "L"
 
-    if seat == 'L' and occupied == 0:
-        return '#'
-    if seat == '#' and occupied > 3:
-        return 'L'
-    return seat
+            elif seat == ".":
+                layout[row, col] = "."
+            elif seat == "L":
+                neighbors = ""
+                for i in range(-1, 2):
+                    for j in range(-1,2):
+                        if i == j == 0:
+                            continue
+                        neighbors += old_layout.get((row-i, col-j), ".")
+                occupied = neighbors.count("#")
 
-def nextchart(chart):
-    return {key: changeseat(chart, key) for key in chart}
+                if not occupied:
+                    layout[row, col] = "#"
 
-def count_occupied(chart):
-    return [list(chart.values()).count('#')]
+        if layout == old_layout:
+            break
+        old_layout = {key: value for key, value in layout.items()}
 
-# Part 2: given the new visibility method and rule change for occupied
+    return list(layout.values()).count("#")
+
+print(part1())
+
+
+# Given the new visibility method and rule change for occupied
 # seats becoming # empty, how many seats end up occupied?
 
-def changeseat2(chart, seatkey):
-    seat = chart[seatkey]
-    if seat == '.':
-        return seat
-    occupied = 0
-    for drxn in [-1, -1+1j, 1j, 1+1j, 1, 1-1j, -1j, -1-1j]:
-        neighbor = '.'
-        scale = 0
-        while neighbor == '.':
-            scale += 1
-            neighbor = chart.get((scale * drxn) + seatkey)
-        if neighbor == '#':
-            occupied += 1
-    if seat == 'L' and occupied == 0:
-        return '#'
-    if seat == '#' and occupied > 4:
-        return 'L'
-    return seat
+def part2():
+    with open("day11.txt", "r") as file:
+        data = file.read()
+    data = data.split("\n")
+ 
+    old_layout = {}
+    for i, row in enumerate(data):
+        for j, seat in enumerate(row):
+            old_layout[i, j] = seat
+ 
+    def is_occupied(r, c, direction):
+        while True:
+            r = r + direction[0]
+            c = c + direction[1]
+ 
+            try:
+                if old_layout[r, c] == "#":
+                    return 1
+                elif old_layout[r, c] == "L":
+                    return 0
+            except KeyError:
+                return 0
+ 
+    layout = {}
+    while True:
+        for (row, col), seat in old_layout.items():
+            if seat == ".":
+                layout[row, col] = "."
+            elif seat == "L":
+                occupied = 0
+                for i in range(-1, 2):
+                    for j in range(-1, 2):
+                        if i == j == 0:
+                            continue
+                        occupied += is_occupied(row, col, (i, j))
+ 
+                if not occupied:
+                    layout[row, col] = "#"
+ 
+            elif seat == "#":
+                occupied = 0
+                for i in range(-1, 2):
+                    for j in range(-1, 2):
+                        if i == j == 0:
+                            continue
+                        occupied += is_occupied(row, col, (i, j))
+ 
+                if occupied >= 5:
+                    layout[row, col] = "L"
+ 
+        if layout == old_layout:
+            break
+        old_layout = {key: value for key, value in layout.items()}
+ 
+    count = 0
+    for v in layout.values():
+        if v == "#":
+            count += 1
+ 
+    return count
 
-def nextchart2(chart):
-    return {key: changeseat2(chart, key) for key in chart}
-
-
-empty_chart = text2chart(empty_chart_text)
-stabilized = run_till_stabilized(1, empty_chart)
-part_1 = count_occupied(stabilized)
-
-#print(stabilized)
-print(part_1, '\n')
-
-stabilized2 = run_till_stabilized(2, empty_chart)
-part_2 = count_occupied(stabilized2)
-
-#print(stabilized2)
-print(part_2)
+print(part2())
