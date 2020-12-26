@@ -1,6 +1,4 @@
-# Day 5: Binary Boarding
-# Part 1: find the highest seat number
-
+# Day 5: Binary Boarding part 1: What is the highest seat ID on a boarding pass?
 with open('day5.txt') as f:
     lines = f.read().split('\n')
 
@@ -36,14 +34,9 @@ for line in lines:
 
 print("Highest seat nr: {}".format(max_id))
 
-
-# part 2: find the id of my seat
-
+# part 2: What is the ID of your seat?
 sorted_seats = sorted(seats)
 
-if prt==1: print(sorted_searts)
-
-# find seat where only 1 number is missing!
 for i in range(1, len(seats)-1):
     if sorted_seats[i+1] != sorted_seats[i] + 1:
         print("My seat nr: {}".format(sorted_seats[i]+1))
