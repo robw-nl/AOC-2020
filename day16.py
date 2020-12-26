@@ -4,7 +4,7 @@ import re,operator
 
 all_tickets = []
 corr_tickets = []
-all_ranges = set()
+all_ranges: set = set()
 rules_map = {}
 
 def get_ranges(x, y):
@@ -29,7 +29,7 @@ def part1():
             if int(j) not in all_ranges:
                 error_rate+=int(j)
                 is_good=False
-        if is_good: 
+        if is_good: # all fields on ticket were good
             corr_tickets.append(line)
         is_good=True
 
@@ -58,8 +58,7 @@ def part2():
                 break
 
         for index, value in pos.items():
-            if index == target_index : continue
-            if target_field in pos[index]:
+            if index != target_index and target_field in pos[index]:
                 value.remove(target_field)
 
     return 'Part 2 multiplied: {}'.format(reduce(operator.mul, [ all_tickets[0][i] for i in pos if 'departure' in pos[i].pop()]))
