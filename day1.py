@@ -12,7 +12,7 @@ for a, b, c in combinations(l, 3):
         print("P of {}+{} = {}".format(a, b, a+b))
         go[0]=False
     if go[1] and a+b+c==2020: 
-        print("P of {}*{}*{} = {}".format(a, b, c, a*b*c))
+        print("S of {}*{}*{} = {}".format(a, b, c, a*b*c))
         go[1]=False
     
 
