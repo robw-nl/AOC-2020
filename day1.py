@@ -2,13 +2,17 @@
 # # Part one: Multiply the two entries that sum to 2020
 # Part two: What is the product of the three entries that sum to 2020
 
-l=[]
-for s in open("day1.txt"):
-    l.append(int(s.strip()))
+from itertools import combinations
 
-p1=p2=0
-for a in l:
-    for b in l: 
-        if p1 == 0 and a+b==2020: p1=a*b; print("P of {}*{}    = {}".format(a, b, p1))
-        for c in l:
-            if p2 == 0 and a+b+c==2020: p2=a*b*c; print("P of {}*{}*{} = {}".format(a, b, c, p2))
+l = [int(s.strip()) for s in open("day1.txt")]
+go = [True, True]
+
+for a, b, c in combinations(l, 3):
+    if go[0] and a+b==2020:
+        print("P of {}+{} = {}".format(a, b, a+b))
+        go[0]=False
+    if go[1] and a+b+c==2020: 
+        print("P of {}*{}*{} = {}".format(a, b, c, a*b*c))
+        go[1]=False
+    
+
