@@ -43,23 +43,23 @@ def part2():
     for ticket in all_tickets:
         if any(val not in all_ranges for val in ticket): continue
 
-        for idx,val in enumerate(ticket):
+        for index,val in enumerate(ticket):
             for rule, value__ in rules_map.items():
-                if val not in value__: pos[idx].remove(rule)
+                if val not in value__: pos[index].remove(rule)
 
     visited = [False for _ in range(len(pos))]
 
     for _ in range(len(pos)):
-        for idx, value_ in pos.items():
-            if len(value_) == 1 and not visited[idx]:
-                visited[idx] = True
-                target_idx = idx
-                target_field = [e for e in pos[idx]][0]
+        for index, value_ in pos.items():
+            if len(value_) == 1 and not visited[index]:
+                visited[index] = True
+                target_index = index
+                target_field = [e for e in pos[index]][0]
                 break
 
-        for idx, value in pos.items():
-            if idx == target_idx : continue
-            if target_field in pos[idx]:
+        for index, value in pos.items():
+            if index == target_index : continue
+            if target_field in pos[index]:
                 value.remove(target_field)
 
     return 'Part 2 multiplied: {}'.format(reduce(operator.mul, [ all_tickets[0][i] for i in pos if 'departure' in pos[i].pop()]))
