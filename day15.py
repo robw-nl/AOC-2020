@@ -1,6 +1,4 @@
-# Day 15: Rambunctious Recitation
-# What will be the 2020th number spoken?
-
+# Day 15: Rambunctious Recitation, What will be the 2020th number spoken?
 
 def spoken_num(n):
     spoken=[9,19,1,6,0,5,4]
@@ -10,5 +8,4 @@ def spoken_num(n):
         spoken[a],a = (i, i-spoken[a]) if a in spoken else (i, 0)
     return a
 
-print('part1',spoken_num(2020))
-print('part2',spoken_num(30000000))
+print('part1',spoken_num(2020), '- part2',spoken_num(30000000))
