@@ -1,7 +1,6 @@
 # Day 16, part 1: Consider the validity of the nearby tickets you scanned.# What is your ticket scanning error rate?
-import re
 from functools import reduce
-import time,os,re,operator
+import re,operator
 
 all_tickets = []
 corr_tickets = []
