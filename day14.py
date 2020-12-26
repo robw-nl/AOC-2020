@@ -50,7 +50,6 @@ for line in lines:
     else:
         a, b = line.split(' = ')
         a = int(a [a.find('[')+1: a.find(']') ])
-        #print(type(a))
         for x in f2(a, 0):
             d[x] = int(b)
 
