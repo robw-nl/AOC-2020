@@ -5,14 +5,11 @@
 from itertools import combinations
 
 l = [int(s.strip()) for s in open("day1.txt")]
-go = [True, True]
+s1=s2=''
 
 for a, b, c in combinations(l, 3):
-    if go[0] and a+b==2020:
-        print("P of {}+{} = {}".format(a, b, a+b))
-        go[0]=False
-    if go[1] and a+b+c==2020: 
-        print("S of {}*{}*{} = {}".format(a, b, c, a*b*c))
-        go[1]=False
-    
-
+    if s1=='' and a+b==2020:
+        s1=("P of {}+{} = {}".format(a, b, a+b))
+    if s2=='' and a+b+c==2020: 
+        s2 = ("S of {}*{}*{} = {}".format(a, b, c, a*b*c))
+print(s1, s2)
