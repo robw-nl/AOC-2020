@@ -3,7 +3,6 @@ from functools import reduce
 import re,operator
 
 all_tickets = []
-corr_tickets = []
 all_ranges: set = set()
 rules_map = {}
 
@@ -19,21 +18,15 @@ for line in open('day16.txt', 'r').read().split('\n'):
     elif ',' in line:
         all_tickets.append(list(map(int , line.split(',')))) 
 
-my_ticket = all_tickets[0]
-
 def part1():
-    is_good=True
-    error_rate=0
+    errors=[0, 0]
     for line in all_tickets[1:]:
         for j in line:
             if int(j) not in all_ranges:
-                error_rate+=int(j)
-                is_good=False
-        if is_good: # all fields on ticket were good
-            corr_tickets.append(line)
-        is_good=True
+                errors[0]+=int(j)
+                errors[1]+=1
 
-    return 'Part 1 Error rate: {} other tickets: {} corr tickets: {}'.format(error_rate, len(all_tickets[1:]), len(corr_tickets))
+    return 'Part 1 Error rate: {} other tickets: {} false tickets: {}'.format(errors[0], len(all_tickets[1:]), errors[1])
 
 # part 2: look for the six fields on your ticket that start with the word departure.
 # What do you get if you multiply those six values together?
