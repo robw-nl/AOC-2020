@@ -10,7 +10,7 @@ def eval_complex(s):
 
     numbers='0123456789'
     while True: 
-        for i, j in enumerate(s): # store bracket positions, find the first numbers
+        for i, _ in enumerate(s): # store bracket positions, find the first numbers
             if i == len(s):
                 return evaluate(s)
             if s.count('*') + s.count('+') <= 1:
@@ -31,7 +31,6 @@ def eval_complex(s):
                 part = s[l_num:r_num] # evaluate content between brackets
                 sum = eval_complex(part)
                 s = repl_strbysum(s, str(part), str(sum))
-                s =s
     return 0
 
 def evaluate(s):
