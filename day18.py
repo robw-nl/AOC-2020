@@ -1,7 +1,7 @@
 # day 18: Evaluate the expression on each line, what is the sum of the resulting values?
 '''
-Find every expression within brackets, evaluate with simple or complex evaluate function - replace expression incl.
-brackets in loop until no more brackets. Evaluate is recursive. Data prep: remove all spaces
+Find every expression within (), evaluate with simple or complex evaluate function - replace expression
+incl brackets in loop until no more brackets. Evaluate is recursive. Data prep: remove all spaces
 '''
 
 def eval_complex(s):
@@ -17,11 +17,11 @@ def eval_complex(s):
                 return eval(s)
             if s[i] in numbers and l_num == -1:
                 l_num = i # pos of 1st number
-                z = i
-                while s[z] in numbers: # run through the remaining numbers
-                    z+=1 # need a temp var as we can't change i here, the loop will
+                shift = i
+                while s[shift] in numbers: # run through the remaining numbers
+                    shift+=1 # use a tmp var: we loop quicker than for loop controlled i
             elif s[i] in '*+' and ops == -1:
-                ops=z # use z as i is now wrong
+                ops=shift # use shift as i is now wrong as we just traversed through chars
             elif s[i] in numbers and ops > -1:
                 while s[i] in numbers:
                     i+=1
