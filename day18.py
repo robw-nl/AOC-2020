@@ -10,27 +10,27 @@ def repl_strbysum(s, strng, part):
 def evaluate(s):
     s = s.replace('(','').replace(')','') # don't need brackets now    
     numbers = '0123456789'
-    l_num = ops = -1
+    l_num = oper = -1
 
     for i, _ in enumerate(s): # store bracket positions, find the first numbers
         if i == len(s):
             return evaluate(s)
         if s.count('*') + s.count('+') <= 1:
             return eval(s)
-        if s[i] in numbers and l_num == -1:
-            l_num = i # pos of 1st number
-            shift = i
-            while s[shift] in numbers: # run through the remaining numbers
-                shift+=1 # use a tmp var: we loop quicker than for loop controlled i
-        elif s[i] in '*+':
-            ops=shift # use shift as i is now wrong as we just traversed through chars
-        elif s[i] in numbers and ops > -1:
-            while s[i] in numbers:
-                i+=1
-                if i == len(s):
-                    break
-            part = s[l_num:i] # evaluate content between brackets
-            s = repl_strbysum(s, str(part), str(evaluate(part)))
+        if s[i] in numbers:
+            if l_num == -1:
+                l_num = i # pos of 1st number
+                while s[i] in numbers: # run through the remaining numbers
+                    i+=1
+                    if s[i] in '*+':
+                        oper=i
+            elif oper > -1:
+                while s[i] in numbers:
+                    i+=1
+                    if i == len(s):
+                        break
+                part = s[l_num:i] # evaluate content between brackets
+                s = repl_strbysum(s, str(part), str(evaluate(part)))
 
 def parse(s):
     s=s.replace(' ', '')
