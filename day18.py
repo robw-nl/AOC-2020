@@ -1,8 +1,6 @@
-# day 18 p1: Evaluate the expression on each line, what is the sum of the resulting values?
-'''
-Find every expression within (), evaluate python's eval() or my evaluate() function - replace expression
-incl brackets in loop until no more brackets. Evaluate is recursive. Data prep: remove all spaces
-'''
+# day 18: Evaluate the expression on each line, what is the sum of the resulting values?
+# Find every expression within (), evaluate python's eval() or my evaluate() function - replace expression
+# incl brackets in loop until no more brackets. Evaluate is recursive. Data prep: remove all spaces
 
 def repl_strbysum(s, strng, part):
     return s.replace(strng, part, 1)
@@ -25,14 +23,13 @@ def evaluate(s):
             while str(s[i]).isnumeric():
                 if (i := i + 1) == len(s):
                     break
-            
             s = repl_strbysum(s, str(s[pos:i]), str(evaluate(s[pos:i])))
 
 def parse(s):
     s=s.replace(' ', '')
     while True:
         sum = l_br = r_br = 0
-        if s.count('(') + s.count(')') == 0: # skip processing
+        if s.count('(') + s.count(')') == 0: # no brackets, skip processing
             return evaluate(s)
             
         for i, j in enumerate(s):
@@ -40,9 +37,8 @@ def parse(s):
                 l_br = i # check following brackets
             elif s[i] == ')':
                 r_br = i # evaluate content between brackets
-                part = s[l_br:r_br+1]
-                sum = evaluate(part)
-                s = repl_strbysum(s, str(part), str(sum))
+                sum = evaluate(s[l_br:r_br+1])
+                s = repl_strbysum(s, str(s[l_br:r_br+1]), str(sum))
                 break
     return 0
 
