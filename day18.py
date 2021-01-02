@@ -1,4 +1,4 @@
-# day 18: Evaluate the expression on each line, what is the sum of the resulting values?
+# day 18 p1: Evaluate the expression on each line, what is the sum of the resulting values?
 '''
 Find every expression within (), evaluate python's eval() or my evaluate() function - replace expression
 incl brackets in loop until no more brackets. Evaluate is recursive. Data prep: remove all spaces
@@ -9,34 +9,30 @@ def repl_strbysum(s, strng, part):
 
 def evaluate(s):
     s = s.replace('(','').replace(')','') # don't need brackets now    
-    numbers = '0123456789'
-    l_num = oper = -1
+    pos = oper = -1
 
-    for i, _ in enumerate(s): # store bracket positions, find the first numbers
+    for i, _ in enumerate(s): # store bracket pos, find numbers
         if i == len(s):
             return evaluate(s)
         if s.count('*') + s.count('+') <= 1:
             return eval(s)
-        if s[i] in numbers:
-            if l_num == -1:
-                l_num = i # pos of 1st number
-                while s[i] in numbers: # run through the remaining numbers
-                    i+=1
-                    if s[i] in '*+':
-                        oper=i
-            elif oper > -1:
-                while s[i] in numbers:
-                    i+=1
-                    if i == len(s):
-                        break
-                part = s[l_num:i] # evaluate content between brackets
-                s = repl_strbysum(s, str(part), str(evaluate(part)))
+        if pos == -1:
+            pos = i # pos of 1st number
+            while s[i] not in '*+':
+                oper=i
+                i+=1
+        elif oper > -1:
+            while str(s[i]).isnumeric():
+                if (i := i + 1) == len(s):
+                    break
+            
+            s = repl_strbysum(s, str(s[pos:i]), str(evaluate(s[pos:i])))
 
 def parse(s):
     s=s.replace(' ', '')
     while True:
         sum = l_br = r_br = 0
-        if s.count('(') + s.count(')') == 0: # no brackets, skip processing
+        if s.count('(') + s.count(')') == 0: # skip processing
             return evaluate(s)
             
         for i, j in enumerate(s):
@@ -55,7 +51,6 @@ def init():
 
     s = sum(parse(line) for line in lines.splitlines())
     t = eval("("+lines.replace('*',')*(').replace('\n',')+(')+"0)")
-
     print('Part 1: {} - Part 2: {}'.format(s, t))
 
 def main():
