@@ -41,10 +41,11 @@ def parse(s):
 
 def init():
     lines = open('day18.txt').read()
+    p1 = sum(parse(line) for line in lines.splitlines())
+    # P2 we can solve by modyfying the order () and fix the end of the string
+    p2 = sum(eval("("+l.replace('*',')*(')+')+('+"0)") for l in lines.splitlines())
 
-    s = sum(parse(line) for line in lines.splitlines())
-    t = eval("("+lines.replace('*',')*(').replace('\n',')+(')+"0)")
-    print('Part 1: {} - Part 2: {}'.format(s, t))
+    print('Part 1: {} - Part 2: {}'.format(p1, p2))
 
 def main():
     init()
