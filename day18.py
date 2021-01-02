@@ -2,9 +2,6 @@
 # Find every expression within (), evaluate python's eval() or my evaluate() function - replace expression
 # incl brackets in loop until no more brackets. Evaluate is recursive. Data prep: remove all spaces
 
-def repl_strbysum(s, strng, part):
-    return s.replace(strng, part, 1)
-
 def evaluate(s):
     s = s.replace('(','').replace(')','') # don't need brackets now    
     pos = oper = -1
@@ -23,7 +20,7 @@ def evaluate(s):
             while str(s[i]).isnumeric():
                 if (i := i + 1) == len(s):
                     break
-            s = repl_strbysum(s, str(s[pos:i]), str(evaluate(s[pos:i])))
+            s = s.replace(str(s[pos:i]), str(evaluate(s[pos:i])), 1)
 
 def parse(s):
     s=s.replace(' ', '')
@@ -38,7 +35,7 @@ def parse(s):
             elif s[i] == ')':
                 r_br = i # evaluate content between brackets
                 sum = evaluate(s[l_br:r_br+1])
-                s = repl_strbysum(s, str(s[l_br:r_br+1]), str(sum))
+                s = s.replace(str(s[l_br:r_br+1]), str(sum), 1)
                 break
     return 0
 
