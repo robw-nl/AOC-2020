@@ -27,8 +27,7 @@ def parse(s):
     while True:
         sum = l_br = r_br = 0
         if s.count('(') + s.count(')') == 0: # no brackets, skip processing
-            return evaluate(s)
-            
+            return evaluate(s)        
         for i, j in enumerate(s):
             if s[i] == '(': # store brackets position
                 l_br = i
@@ -41,10 +40,8 @@ def parse(s):
 
 def init():
     lines = open('day18.txt').read()
-
     p1 = sum(parse(line) for line in lines.splitlines())
     p2 = sum(eval("("+l.replace('*',')*(') + ')+(' + "0)") for l in lines.splitlines())
-
     print('Part 1: {} - Part 2: {}'.format(p1, p2))
 
 def main():
