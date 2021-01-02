@@ -28,7 +28,7 @@ def parse(s):
         sum = l_br = r_br = 0
         if s.count('(') + s.count(')') == 0: # no brackets, skip processing
             return evaluate(s)        
-        for i, j in enumerate(s):
+        for i, j_ in enumerate(s):
             if s[i] == '(': # store brackets position
                 l_br = i
             elif s[i] == ')': # found closing bracket
