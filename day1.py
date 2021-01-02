@@ -4,10 +4,10 @@
 
 from itertools import combinations
 
-l = [int(s.strip()) for s in open("day1.txt")]
+line = [int(lines.strip()) for lines in open("day1.txt")]
 s1=s2=''
 
-for a, b, c in combinations(l, 3):
+for a, b, c in combinations(line, 3):
     if s1=='' and a+b==2020:
         s1=("P of {}+{} = {}".format(a, b, a+b))
     if s2=='' and a+b+c==2020: 
