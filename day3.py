@@ -1,8 +1,8 @@
 # Day 3: Toboggan Trajectory
 # Part one
 
-with open('day3.txt') as input:
-	grid = [line.rstrip() for line in input]
+with open('day3.txt') as lines:
+	grid = [line.rstrip() for line in lines]
 
 i = c = count = 0
 for x in grid:
