@@ -1,6 +1,6 @@
-# day 18: Evaluate the expression on each line, what is the sum of the resulting values?
-# Find every expression within (), evaluate python's eval() or my evaluate() function - replace expression
-# incl brackets in loop until no more brackets. Evaluate is recursive. Data prep: remove all spaces
+# day 18 P1:Find every expression within (), evaluate python's eval() or my evaluate() function
+# replace expression incl brackets in loop until no more brackets. Evaluate is recursive. Data
+# prep: remove all spaces. P2 we can solve by modyfying the (order) and fix the end of the string
 
 def evaluate(s):
     s = s.replace('(','').replace(')','') # don't need brackets now    
@@ -31,19 +31,19 @@ def parse(s):
             
         for i, j in enumerate(s):
             if s[i] == '(': # store brackets position
-                l_br = i # check following brackets
-            elif s[i] == ')':
-                r_br = i # evaluate content between brackets
-                sum = evaluate(s[l_br:r_br+1])
+                l_br = i
+            elif s[i] == ')': # found closing bracket
+                r_br = i
+                sum = evaluate(s[l_br:r_br+1]) # evaluate expression
                 s = s.replace(str(s[l_br:r_br+1]), str(sum), 1)
                 break
     return 0
 
 def init():
     lines = open('day18.txt').read()
+
     p1 = sum(parse(line) for line in lines.splitlines())
-    # P2 we can solve by modyfying the order () and fix the end of the string
-    p2 = sum(eval("("+l.replace('*',')*(')+')+('+"0)") for l in lines.splitlines())
+    p2 = sum(eval("("+l.replace('*',')*(') + ')+(' + "0)") for l in lines.splitlines())
 
     print('Part 1: {} - Part 2: {}'.format(p1, p2))
 
