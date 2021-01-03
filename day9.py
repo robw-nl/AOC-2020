@@ -4,10 +4,7 @@
 # Part one: fmem the first number in the list (after the preamble) which is not the sum of two of the 25 numbers before it
 # Solution: slide with 25 numbers through the whole list (lines) and calculate the sum of all components to 25+1 until one fails
 
-file = open('day9.txt', 'r')
-lines = file.readlines()
-
-lines = [int(item.strip()) for item in lines] # remove all '\n' and conv to int
+lines = [int(item.strip()) for item in open('day9.txt', 'r').readlines()]
 
 p = range(1, 150)
 next = 25 # next nr to work with
@@ -31,7 +28,6 @@ while next < len(lines):
 # Part two: fmem a contiguous set of at least two numbers in 'lines' which sum to part 1 outcome
 # encryption weakness, add together the smallest and largest number in this contiguous range
 
-work_set = []
 for i, start_number in enumerate(lines):
     work_set = [start_number]
     shot_sum = shot
