@@ -1,4 +1,6 @@
-# Day 16, part 1: Consider the validity of the nearby tickets you scanned.# What is your ticket scanning error rate?
+# Day 16, part 1: What is your ticket scanning error rate?
+# RE-WRITE SOMETIME, VERY MESSY NOW
+
 from functools import reduce
 import re,operator
 from itertools import combinations
@@ -11,7 +13,7 @@ def get_ranges(x, y):
     y |= set(range(x[0] , x[1] + 1)) | set(range(x[2] , x[3] + 1))
     return y
 
-for line in open('day16.txt', 'r').read().split('\n'):
+for line in open('day16.txt', 'r').read().splitlines():
     if 'or' in line:
         vals = list(map(int, re.findall(r'(\d+)' , line)))
         all_ranges = get_ranges(vals, all_ranges)
