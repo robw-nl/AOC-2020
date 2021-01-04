@@ -5,8 +5,6 @@ with open('day5.txt') as f:
 max_id = 0
 seats = []
 
-prt = 0
-
 for line in lines:
     row_low = 0
     row_high = 127 # nr of rows +1
@@ -17,16 +15,12 @@ for line in lines:
     for letter in line:
         if letter == "F":
             row_high = (row_high+ row_low) // 2
-            if prt==1: print("high: {}".format(row_high))
         if letter == "B":
             row_low = (row_high + row_low) // 2
-            if prt==1: print("low: {}".format(row_low))
         if letter == "R":
             col_low = (col_high + col_low) // 2
-            if prt==1: print("low: {}".format(row_low))
         if letter == "L":
             col_high = (col_high + col_low) // 2
-            if prt==1: print("high: {}".format(col_high))
 
     seat_id = (row_low + 1) * 8 + col_high
     max_id = max(seat_id, max_id)

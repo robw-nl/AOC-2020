@@ -15,6 +15,8 @@
 # ..#.#..#
 # .....#..
 
+# rewrite sometime with 1 function for 3d and 4d
+
 def cubes3d(active):
     for _ in range(6):
         to_check = set()
@@ -38,7 +40,7 @@ def cubes3d(active):
             for xo in range(-1, 2):
                 for yo in range(-1, 2):
                     for zo in range(-1, 2):
-                        if (x+xo, y+yo, z+zo) in active: # turn neighbour cubes active?
+                        if (x+xo, y+yo, z+zo) in active: # turn neighbours active
                             active_count += 1
 
             if active_count == 3:

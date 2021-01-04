@@ -1,6 +1,7 @@
 # Day 16, part 1: Consider the validity of the nearby tickets you scanned.# What is your ticket scanning error rate?
 from functools import reduce
 import re,operator
+from itertools import combinations
 
 all_tickets = []
 all_ranges: set = set()

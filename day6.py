@@ -1,5 +1,4 @@
-# Day 6: Custom Customs
-# Part one: check correctness passports
+# Day 6: Custom Customs part one: check correctness passports
 # First attemps, re-write sometime
 
 with open('day6.txt') as f:
