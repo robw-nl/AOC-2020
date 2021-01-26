@@ -81,16 +81,12 @@ def assm_w(puzz, grid, dim):
     while True:
         if len(grid) == 0:
             return puzz, grid
-
         if shift_row == dim:
-            shift_row = 0            
-            shift_col = 0
-
+            shift_row = shift_col = 0
         if not match_w(puzz[shift_col][shift_row], grid[0]):
             grid = shift(grid, len(grid)-1)
             i += 1
-            continue
-        
+            continue 
         if puzz[0][shift_row] != 'West' and shift_row == 0:
             puzz = add_w_col(puzz, dim)
             shift_col = +1
@@ -105,20 +101,17 @@ def assm_w(puzz, grid, dim):
         return puzz, grid     
         
 def assm_e(puzz, grid, dim):
-    shift_row = shift_col = i = 0   
+    shift_row = shift_col = i = 0
     while True:
         if i == len(grid) or len(grid) == 0:
                 return puzz, grid
-
         if shift_row == dim:
             shift_row = 0
-            shift_col += 1
-                    
+            shift_col += 1   
         if not match_e(puzz[shift_col][shift_row], grid[0]):
             grid = shift(grid, len(grid)-1)
             i += 1
             continue
-    
         if puzz[0][shift_row] != 'East' and shift_row == 0:
             puzz = add_e_col(puzz, dim)
 
@@ -140,8 +133,6 @@ def match_z(tile1, tile2, first_time = False):
                             return True
                     tile1.rotate()
                 tile1.flip('v')
-                if tile1.south == tile2.north:
-                    return True
             tile2.rotate()
         tile2.flip('v')
     return tile1.south == tile2.north
@@ -158,24 +149,19 @@ def match_n(tile1, tile2, first_time = False):
                             return True
                     tile1.rotate()
                 tile1.flip('v')
-                if tile1.north == tile2.south:
-                    return True
             tile2.rotate()
         tile2.flip('v')
     return tile1.north == tile2.south
 
 def assm_s(puzz, grid, dim): 
     c = i = 0
-
     while True:
         if len(puzz[0]) == dim or i > len(grid):
             return puzz, grid
-
         if not match_z(puzz[0][-1], grid[0], len(puzz[0])==1):
             grid = shift(grid, len(grid)-1)
             i += 1
             continue
-
         if puzz[0][-1].south == grid[0].north:
             puzz[0].append(grid[0])
             
@@ -186,16 +172,13 @@ def assm_n(grid, dim):
     c = i = 0
     puzz = [[grid[0]]]
     del grid[0]
-
     while True:
         if len(puzz[0]) == dim or i > len(grid):
             return puzz, grid
-
         if not match_n(puzz[0][0], grid[0], len(puzz[0])==1):
             grid = shift(grid, len(grid)-1)
             i += 1
             continue
-
         if puzz[0][0].north == grid[0].south:
             puzz[0].insert(0, grid[0])
             
@@ -211,7 +194,6 @@ def find_monsters(grid):
     '''
     hlen = len(grid[0])-19 # -20 as the sea monster is 20 long
     vlen = len(grid)-2 # -3 as the sea monster is height 3
-
     found = end=0
     t=[]
     for line in grid:
@@ -226,17 +208,14 @@ def find_monsters(grid):
                         t[2][13+c] == '#' and t[2][16+c]
                     ):
                     found+=1
-                    print(found, ' MONSTER FOUND')
             t.pop(0) # remove first line
         end += 1 # end it counter
-
         if end == vlen: # break before end of grid
             return found
 
 def make_puzz8(puzz):
     puzz8 = []
     string=''
-
     for i in range(12):
         for j in range(8):
             for k in range(12):
@@ -244,7 +223,6 @@ def make_puzz8(puzz):
                 string+=q.tile8[j]
             puzz8.append(string)
             string = ''
-
     return puzz8
 
 def main():
@@ -269,15 +247,10 @@ def main():
                 break
             x = list(zip(*puzz8[::-1])) # rotate
             puzz8 = [''.join(b) for b in x]
-        if monsters > 0:
-            break
         puzz8 = [b[::-1] for b in puzz8] # flip
 
     sea_roughness = sum(str(i).count('#') for i in puzz8) - 26*15
-    
-    print('\n')
-    print('Nr. of monsters = ', monsters, 'sea_roughness = ', sea_roughness)
-    print('\n')
+    print('\nNr. of monsters = ', monsters, 'sea_roughness = ', sea_roughness, '\n')
 
 if __name__ == '__main__':   
         main()
