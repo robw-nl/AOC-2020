@@ -77,68 +77,57 @@ def match_w(tile1, tile2):
     return tile1.west == tile2.east
 
 def assm_w(puzz, grid, dim):
-    if len(grid) == 0:
-        return puzz, grid
-
     shift_row = shift_col = i = 0
     while True:
+        if len(grid) == 0:
+            return puzz, grid
 
         if shift_row == dim:
             shift_row = 0            
             shift_col = 0
 
-        match = match_w(puzz[shift_col][shift_row], grid[0])
-        
-        if match:
-            
-            if puzz[0][shift_row] != 'West' and shift_row == 0:
-                puzz = add_w_col(puzz, dim)
-                shift_col = +1
-
-            puzz[0][0+shift_row] =  grid[0]
-            
-            del grid[0]
-            shift_row += 1
-            i = 0            
- 
-        if i == len(grid) or len(grid) == 0:
-            return puzz, grid
-    
-        if not match:
+        if not match_w(puzz[shift_col][shift_row], grid[0]):
             grid = shift(grid, len(grid)-1)
             i += 1
             continue
+        
+        if puzz[0][shift_row] != 'West' and shift_row == 0:
+            puzz = add_w_col(puzz, dim)
+            shift_col = +1
 
+        puzz[0][0+shift_row] =  grid[0]
+        
+        del grid[0]
+        shift_row += 1
+        i = 0            
+
+    if i == len(grid) or len(grid) == 0:
+        return puzz, grid     
+        
 def assm_e(puzz, grid, dim):
-    if len(grid) == 0:
-        return puzz, grid
-
-    shift_row = shift_col = i = 0
+    shift_row = shift_col = i = 0   
     while True:
+        if i == len(grid) or len(grid) == 0:
+                return puzz, grid
 
         if shift_row == dim:
             shift_row = 0
             shift_col += 1
-    
-        match = match_e(puzz[shift_col][shift_row], grid[0])
-        if match:
-            if puzz[0][shift_row] != 'East' and shift_row == 0:
-                puzz = add_e_col(puzz, dim)
-
-            puzz[-1][shift_row] = grid[0]
-
-            del grid[0]
-            shift_row += 1
-            i = 0 
-
-        if i == len(grid) or len(grid) == 0:
-            return puzz, grid
-        
-        if not match:
+                    
+        if not match_e(puzz[shift_col][shift_row], grid[0]):
             grid = shift(grid, len(grid)-1)
             i += 1
             continue
+    
+        if puzz[0][shift_row] != 'East' and shift_row == 0:
+            puzz = add_e_col(puzz, dim)
 
+        puzz[-1][shift_row] = grid[0]
+
+        del grid[0]
+        shift_row += 1
+        i = 0 
+    
 def match_z(tile1, tile2, first_time = False):
     for _ in range(2):
         for _ in range(4):
@@ -182,9 +171,7 @@ def assm_s(puzz, grid, dim):
         if len(puzz[0]) == dim or i > len(grid):
             return puzz, grid
 
-        match = match_z(puzz[0][-1], grid[0], len(puzz[0])==1)
-    
-        if not match:
+        if not match_z(puzz[0][-1], grid[0], len(puzz[0])==1):
             grid = shift(grid, len(grid)-1)
             i += 1
             continue
@@ -204,9 +191,7 @@ def assm_n(grid, dim):
         if len(puzz[0]) == dim or i > len(grid):
             return puzz, grid
 
-        match = match_n(puzz[0][0], grid[0], len(puzz[0])==1)
-
-        if not match:
+        if not match_n(puzz[0][0], grid[0], len(puzz[0])==1):
             grid = shift(grid, len(grid)-1)
             i += 1
             continue
@@ -225,14 +210,14 @@ def find_monsters(grid):
      #  #  #  #  #  #   -----------------------------------}
     '''
     hlen = len(grid[0])-19 # -20 as the sea monster is 20 long
-    vlen = len(grid)-2 # -3 as the sea monster is 3 heigh
+    vlen = len(grid)-2 # -3 as the sea monster is height 3
 
     found = end=0
     t=[]
     for line in grid:
         t.append(line)
         if len(t) == 3:
-            # scan for monster here
+            # scan for monster here with my very own slider
             for c, _ in enumerate(range(hlen)):
                 if  (   t[0][18+c] == '#' and 
                         t[1][0+c]  == '#' and t[1][5+c]  == '#' and t[1][6+c]  == '#' and t[1][11+c] == '#' and 
@@ -241,7 +226,7 @@ def find_monsters(grid):
                         t[2][13+c] == '#' and t[2][16+c]
                     ):
                     found+=1
-                    print('MONSTER FOUND')
+                    print(found, ' MONSTER FOUND')
             t.pop(0) # remove first line
         end += 1 # end it counter
 
@@ -282,11 +267,11 @@ def main():
             monsters += find_monsters(puzz8)
             if monsters > 0:
                 break
-            x = list(zip(*puzz8[::-1]))
+            x = list(zip(*puzz8[::-1])) # rotate
             puzz8 = [''.join(b) for b in x]
         if monsters > 0:
             break
-        puzz8 = [b[::-1] for b in puzz8]
+        puzz8 = [b[::-1] for b in puzz8] # flip
 
     sea_roughness = sum(str(i).count('#') for i in puzz8) - 26*15
     
