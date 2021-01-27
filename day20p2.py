@@ -78,9 +78,7 @@ def match_w(tile1, tile2):
 
 def assm_w(puzz, grid, dim):
     shift_row = shift_col = i = 0
-    while True:
-        if len(grid) == 0:
-            return puzz, grid
+    while len(grid) != 0 and i != len(grid):
         if shift_row == dim:
             shift_row = shift_col = 0
         if not match_w(puzz[shift_col][shift_row], grid[0]):
@@ -91,20 +89,16 @@ def assm_w(puzz, grid, dim):
             puzz = add_w_col(puzz, dim)
             shift_col = +1
 
-        puzz[0][0+shift_row] =  grid[0]
-        
+        puzz[0][0+shift_row] =  grid[0]      
         del grid[0]
         shift_row += 1
         i = 0            
+    return puzz, grid
 
-    if i == len(grid) or len(grid) == 0:
-        return puzz, grid     
-        
+
 def assm_e(puzz, grid, dim):
     shift_row = shift_col = i = 0
-    while True:
-        if i == len(grid) or len(grid) == 0:
-                return puzz, grid
+    while i != len(grid) and len(grid) != 0:
         if shift_row == dim:
             shift_row = 0
             shift_col += 1   
@@ -116,10 +110,10 @@ def assm_e(puzz, grid, dim):
             puzz = add_e_col(puzz, dim)
 
         puzz[-1][shift_row] = grid[0]
-
         del grid[0]
         shift_row += 1
         i = 0 
+    return puzz, grid
     
 def match_z(tile1, tile2, first_time = False):
     for _ in range(2):
@@ -155,9 +149,7 @@ def match_n(tile1, tile2, first_time = False):
 
 def assm_s(puzz, grid, dim): 
     c = i = 0
-    while True:
-        if len(puzz[0]) == dim or i > len(grid):
-            return puzz, grid
+    while len(puzz[0]) != dim and i <= len(grid):
         if not match_z(puzz[0][-1], grid[0], len(puzz[0])==1):
             grid = shift(grid, len(grid)-1)
             i += 1
@@ -167,14 +159,14 @@ def assm_s(puzz, grid, dim):
             
         del grid[0]
         i = 0
+    return puzz, grid
  
 def assm_n(grid, dim): 
     c = i = 0
     puzz = [[grid[0]]]
     del grid[0]
-    while True:
-        if len(puzz[0]) == dim or i > len(grid):
-            return puzz, grid
+    
+    while len(puzz[0]) != dim and i <= len(grid):
         if not match_n(puzz[0][0], grid[0], len(puzz[0])==1):
             grid = shift(grid, len(grid)-1)
             i += 1
@@ -184,6 +176,7 @@ def assm_n(grid, dim):
             
         del grid[0]
         i = 0
+    return puzz, grid
 
 def find_monsters(grid):
     '''
