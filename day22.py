@@ -15,9 +15,9 @@ while len(player1) > 0 and len(player2) > 0:
         del player1[0]
 
 winner = player1 if len(player1) > len(player2) else player2
+
 total = 0
-while len(winner) > 0:
-    m = len(winner)
-    total += m * winner.pop(0)
+while winner:
+    total += len(winner) * winner.pop(0)
 
 print('\nWinning score: ', total, '\n')
