@@ -4,7 +4,6 @@ class tile(object):
         self.tile_id = int(grid[0])
         self.tile = grid[1:]
         self.len = len(self.tile) if self.tile != 0 else 0
-        tile_8 = []
         
     def rotate(self, rotation = 'r'): 
         x = list(zip(*self.tile[::-1])) if rotation == 'r' else list(zip(*self.tile))[::-1]
@@ -148,7 +147,7 @@ def match_n(tile1, tile2, first_time = False):
     return tile1.north == tile2.south
 
 def assm_s(puzz, grid, dim): 
-    c = i = 0
+    i = 0
     while len(puzz[0]) != dim and i <= len(grid):
         if not match_z(puzz[0][-1], grid[0], len(puzz[0])==1):
             grid = shift(grid, len(grid)-1)
@@ -219,7 +218,7 @@ def make_puzz8(puzz):
     return puzz8
 
 def main():
-    lines = open('day20p2.txt', 'r').read().split('\n\n')
+    lines = open('day20.txt', 'r').read().split('\n\n')
     grid = [line.split() for line in lines] # make the grid
     grid = [x for x in grid if x] # remove empty items
     grid = [tile(i) for i in grid]
