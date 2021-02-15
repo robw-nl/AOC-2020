@@ -1,42 +1,65 @@
-def get_adj_tiles(coord_stack):
+directions = [ ['NW',0,-1],['NE',1,-1],['SW',-1,1],['SE',0,1],['e',1,0],['w',-1,0] ]
 
-    coordinates = [ ['nw',-1,1],['ne',1,1],['sw',-1,-1],['se',1,-1],['e',2,0],['w',-2,0] ]
-    coord = []
-    for i, item in enumerate(coordinates):
-        coord.append( [item[0], coord_stack[i][0]+item[1], coord_stack[i][1]+item[2]] )
-    return coord
+def find_adj_tiles(stack, tile):
+    x = []
+    for item in directions:
+        x.append([tile[0] + item[1], tile[1] + item[2], tile[2]])
+        for t in stack:
+            if x[-1][:2] == t[:2]:
+                x[-1][2] = t[2]
+                break
+            else:
+                x[-1][2] = False
+    return sum(t[2] for t in x), x
 
-def p2(coord_stack):
-    x = get_adj_tiles(coord_stack)
-    # do stuff with x and black
+def get_coord(tile):
+    c1 = c2 = 0
+    for item in directions:
+        c1+=tile.count(item[0])*item[1]
+        c2+=tile.count(item[0])*item[2]
 
-    return x
+    return [c1, c2, False]
 
-def p1(f):
-    black = set()
-    coord = (0, 0)
-    coord_stack = []
+def p2(stack):
+    import time
+    t0 = time.time()
+
+    for c, _ in enumerate(range(100), start=1):
+        to_flip = []
+
+        for tile in stack:
+            c_black, adj_tiles = find_adj_tiles(stack, tile)            
+            stack.extend([item for item in adj_tiles if tile[2] and item not in stack])
+
+            if tile[2] and (c_black == 0 or c_black > 2) or (not tile[2] and c_black == 2):
+                to_flip.append(tile)
+
+        stack.extend([item for item in adj_tiles if tile[2] and item not in stack])
+        for tile in stack:
+            if tile in to_flip:
+                tile[2] = not tile[2]
+
+        print(f'{c} \t{len(stack)} \t{time.time()-t0:.1f}')
+    return sum(tile[2] for tile in stack)
+
+def p1(tiles):
+    black = []
+    stack = []
+
+    for tile in tiles:
+        stack += [get_coord(str(tile))]
+        black.remove(stack[-1]) if stack[-1] in black else black.append(stack[-1])        
+
+    for tile in stack:
+        tile[2] = tile in black
     
-    for line in [line.split() for line in open(f, 'r').read().split('\n')]:
-        line = str(line)
-
-        nw = [line.count('nw') * -1, line.count('nw') * +1]
-        ne = [line.count('ne') * +1, line.count('ne') * +1]
-        sw = [line.count('sw') * -1, line.count('sw') * -1]
-        se = [line.count('se') * +1, line.count('se') * -1]
-        e  = [(line.count('e')-ne[0]-se[0]) * 2, 0]
-        w  = [(line.count('w')-abs(nw[0])-abs(sw[0])) * -2, 0]
-
-        coord =(nw[0]+ne[0]+sw[0]+se[0]+e[0]+w[0]),(nw[1]+ne[1]+sw[1]+se[1]+e[1]+w[1]) 
-        black.remove(coord) if coord in black else black.add(coord)
-        coord_stack+=[coord]
-    
-    return len(black), coord_stack
+    return black
 
 def main(f):
-    x, coord_stack = p1(f)
-    y = p2(coord_stack)
-    print(f'\np1 {x}, p2 {y}\n')
+    tiles = [tile.split() for tile in open(f, 'r').read().split('\n')]
+
+    black = p1(tiles)   
+    print(f'\np1 {len(black)}, p2 {p2(black)}\n')
 
 if __name__ == '__main__':   
         main('day24.txt')
