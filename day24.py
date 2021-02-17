@@ -33,6 +33,7 @@ def p2(stack):
             if tile[2] and (cnt == 0 or cnt > 2) or (not tile[2] and cnt == 2):
                 to_flip.append(tile)
         
+        to_flip.sort()
         stack.sort()
         for tile in to_flip:
             if tile in stack:
