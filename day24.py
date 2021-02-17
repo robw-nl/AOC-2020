@@ -28,18 +28,17 @@ def p2(stack):
     t0 = time.time()
     for c, _ in enumerate(range(100), start=1):
         to_flip = []
+
         for tile in stack:            
             cnt = add_adj_tiles(stack, tile)             
             if tile[2] and (cnt == 0 or cnt > 2) or (not tile[2] and cnt == 2):
                 to_flip.append(tile)
         
         to_flip.sort()
-        stack.sort()
         for tile in to_flip:
-            if tile in stack:
-                tile[2] = not tile[2]
+            tile[2] = not tile[2]
          
-        print(f'{c} \t{len(stack)} \t{time.time()-t0:.1f}')
+         print(f'{c} \t{len(stack)} \t{time.time()-t0:.1f}')
     return sum(tile[2] for tile in stack)
 
 def p1(tiles):
