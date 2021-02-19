@@ -1,57 +1,55 @@
-directions = [ [0,-1, 'NW'],[1,-1, 'NE'],[-1,1, 'SW'],[0,1, 'SE'],[1,0, 'e'],[-1,0, 'w'] ]
+dirs = { 'NW':[0,-1], 'NE':[1,-1], 'SW':[-1,1], 'SE':[0,1],'e':[1,0], 'w':[-1,0] }
 
-def add_adj_tiles(stack, tile):
-    adj = [[tile[0] + item[0], tile[1] + item[1], tile[2]] for item in directions]
-    adj.sort()
-    stack.sort()
-    cnt=0
-    for a in adj:
-        a[2] = False
-        for s in stack:
-            if a[:2] == s[:2]:
-                a[2] = s[2]
-                break               
-        cnt += a[2]
-        if tile[2] and a not in stack:
-            stack.insert(0, a)
-    return cnt
+def find_adj_tiles(tile):
+    return {(tile[0] + dir[0], tile[1] + dir[1]) for dir in dirs.values()}
 
 def get_coord(tile):
     c1 = c2 = 0
-    for item in directions:
-        c1+=tile.count(item[2])*item[0]
-        c2+=tile.count(item[2])*item[1]
-    return [c1, c2, True]
+    for key, val in dirs.items():
+        c1+=tile.count(key)*val[0]
+        c2+=tile.count(key)*val[1]
+    return (c1, c2)
 
 def p2(stack):
     import time
     t0 = time.time()
-    for c, _ in enumerate(range(100), start=1):
-        to_flip = []
 
-        for tile in stack:            
-            cnt = add_adj_tiles(stack, tile)             
-            if tile[2] and (cnt == 0 or cnt > 2) or (not tile[2] and cnt == 2):
-                to_flip.append(tile)
-        
-        to_flip.sort()
-        for tile in to_flip:
-            tile[2] = not tile[2]
-         
-         print(f'{c} \t{len(stack)} \t{time.time()-t0:.1f}')
-    return sum(tile[2] for tile in stack)
+    for c, _ in enumerate(range(100), start=1):
+        adj = set()
+        new_stack = set()
+
+        for tile in stack:
+            adj.update( find_adj_tiles(tile) )
+
+        for tile in adj:
+            cnt = sum(
+                tuple(a + b for a, b in zip(tile, d)) in stack
+                for d in dirs.values()
+            )
+
+            if (tile in stack and 0 < cnt <= 2) or (
+                tile not in stack and cnt == 2
+            ):
+                new_stack.add(tile)
+        stack = new_stack
+
+    print(f'\n{c} \t{len(stack)} \t{time.time()-t0:.1f}')
+    return stack
 
 def p1(tiles):
-    black = []
+    black = set()
     for tile in tiles:
-        x = get_coord(str(tile))
-        black.remove(x) if x in black else black.append(x)
+        coord = get_coord(str(tile))
+        if coord in black:
+            black.remove(coord)
+        else:
+            black.add(coord)
     return black
 
 def main(f):
     tiles = [tile.split() for tile in open(f, 'r').read().split('\n')]
     black = p1(tiles)   
-    print(f'\np1 {len(black)}, p2 {p2(black)}\n')
+    print(f'\nReal input\np1 {len(black)}, p2 {len(p2(black))}\n')
 
 if __name__ == '__main__':   
-        main('day24ex.txt')
+        main('day24.txt')
