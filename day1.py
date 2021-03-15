@@ -4,15 +4,13 @@
 
 def main():
     s = [int(s.strip()) for s in open("day1.txt")]
-
     for a in s:
         for b in s:
             if a+b==2020:
                 print(a*b)
             for c in s:
                 if a+b+c==2020:
-                    print(a*b*c)
-                    return
-
+                    return print(a*b*c)
+                    
 if __name__ == '__main__':   
         main()
