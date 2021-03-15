@@ -6,8 +6,7 @@ def main():
     s = [int(s.strip()) for s in open("day1.txt")]
     for a in s:
         for b in s:
-            if a+b==2020:
-                print(a*b)
+            print(a*b) if a+b==2020 else None                
             for c in s:
                 if a+b+c==2020:
                     return print(a*b*c)
